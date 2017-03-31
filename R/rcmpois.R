@@ -13,10 +13,11 @@
 #' @param n Number of samples drawn per parameter values provided (default 1).
 #' @return Samples from the COM Poisson distribution with the given parameters (\code{n} each).
 #' @export
+#' @useDynLib combayes rcmpois_wrapper
 rcmpois <- function(n=1, lambda, mu=lambda^(1/nu), nu) {
   if (length(mu)!=length(nu))
     stop("mu and nu must be of the same size.")
-  result <- .C("rmcmpois_wrapper", mu=as.double(mu), nu=as.double(nu), n=as.integer(length(mu)), nout=as.integer(n), result=double(n*length(mu)), attempts=integer(length(mu)),dup=FALSE, PACKAGE="combayes")
+  result <- .C(rcmpois_wrapper, mu=as.double(mu), nu=as.double(nu), n=as.integer(length(mu)), nout=as.integer(n), result=double(n*length(mu)), attempts=integer(length(mu)),dup=FALSE)
   if (length(mu)>1 && n>1)
     result$result <- matrix(result$result, ncol=n, byrow=TRUE)
   attr(result$result,"accept") <- n/result$attempts

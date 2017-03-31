@@ -23,6 +23,7 @@
 #' @param control List with control parameters allowing fine-tuning of the algorithm. See the package source for details.
 #' @return Returns the logarithm of the normalisation constant for each parameter value supplied. The returned vector has am attribute \code{"details"} which contains a matrix providing additional information (smallest \eqn{x} (column \code{"from"}) and largest \eqn{x} (column \code{"to"}) for which the p.m.f. was summed up exactly as well as value of the logairhtm of that exact sum (column \code{"exact"}) and resulting lower and upper bounds (columns \code{"lower"} and \code{"upper"})).
 #' @export
+#' @useDynLib combayes logzcmpois_R
 
 
 logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails=TRUE, max.iter=-1, tol.pmf=.Machine$double.eps, control=list()) {
@@ -47,7 +48,7 @@ logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails
   }
   if (length(mu)!=length(nu))
     stop("mu and mu must be of the same length.")
-  result <- .C("logzmpois_R", mu=as.double(mu), nu=as.double(nu), n=as.integer(length(mu)), from=as.double(pra[,1]), to=as.double(pra[,2]), current_logZ=as.double(pra[,3]), tails=as.integer(tails), tol.pmf=as.double(tol.pmf), tol.tails=as.double(control$tol.tails), tol.min=as.double(control$tol.min), tol.max=as.double(control$tol.max), tol.step=as.double(control$tol.step), tol.add=as.double(control$tol.add), max_iter=as.integer(max.iter), max_tail_iter=as.integer(control$max.tail.iter), reset_cycle=as.integer(control$reset.cycle), initial_step_size=as.double(control$initial.step.size), step_multiplier=as.double(control$step.multiplier), new_logZ=double(length(mu)), new_from=double(length(mu)), new_to=double(length(mu)), log_tails_lower=double(length(mu)), log_tails_upper=double(length(mu)), NAOK=TRUE, PACKAGE="combayes")
+  result <- .C(logzcmpois_R, mu=as.double(mu), nu=as.double(nu), n=as.integer(length(mu)), from=as.double(pra[,1]), to=as.double(pra[,2]), current_logZ=as.double(pra[,3]), tails=as.integer(tails), tol.pmf=as.double(tol.pmf), tol.tails=as.double(control$tol.tails), tol.min=as.double(control$tol.min), tol.max=as.double(control$tol.max), tol.step=as.double(control$tol.step), tol.add=as.double(control$tol.add), max_iter=as.integer(max.iter), max_tail_iter=as.integer(control$max.tail.iter), reset_cycle=as.integer(control$reset.cycle), initial_step_size=as.double(control$initial.step.size), step_multiplier=as.double(control$step.multiplier), new_logZ=double(length(mu)), new_from=double(length(mu)), new_to=double(length(mu)), log_tails_lower=double(length(mu)), log_tails_upper=double(length(mu)), NAOK=TRUE)
   strategies <- c("truncated","lower","upper","midpoint")
   control$strategy <- strategies[pmatch(control$strategy, strategies)]
   if (!tails)
