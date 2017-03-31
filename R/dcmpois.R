@@ -22,6 +22,7 @@
 #' @param tol.pmf Numerical tolerance for evaluating the probability mass function (default \code{.Machine$double.eps}).
 #' @param control List with control parameters allowing fine-tuning of the algorithm. See the package source for details.
 #' @return Returns the logarithm of the normalisation constant for each parameter value supplied. The returned vector has am attribute \code{"details"} which contains a matrix providing additional information (smallest \eqn{x} (column \code{"from"}) and largest \eqn{x} (column \code{"to"}) for which the p.m.f. was summed up exactly as well as value of the logairhtm of that exact sum (column \code{"exact"}) and resulting lower and upper bounds (columns \code{"lower"} and \code{"upper"})).
+#' @export
 
 
 logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails=TRUE, max.iter=-1, tol.pmf=.Machine$double.eps, control=list()) {
@@ -81,6 +82,7 @@ logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails
 #'@param log Whether the logarithm of the p.m.f. is to be returned (default \code{FALSE})
 #'@param ... Additional arguments passed on to \code{\link{logzcmpois}}
 #' @return Vector of the p.m.f. as specified in the arguments.
+#' @export
 
 dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FALSE, ...) {
     if (length(mu)!=length(nu))

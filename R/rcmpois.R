@@ -12,6 +12,7 @@
 #'
 #' @param n Number of samples drawn per parameter values provided (default 1).
 #' @return Samples from the COM Poisson distribution with the given parameters (\code{n} each).
+#' @export
 rcmpois <- function(n=1, lambda, mu=lambda^(1/nu), nu) {
   if (length(mu)!=length(nu))
     stop("mu and nu must be of the same size.")
