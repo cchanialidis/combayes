@@ -100,7 +100,7 @@ dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FAL
         }
         attributes(norm) <- NULL
     }
-    result <- nu*(lambda*log(x) - lgamma(x+1)) - norm
+    result <- nu*(ifelse(x==0, 0, lambda*log(x) - lgamma(x+1))) - norm
     if (!log)
         result <- exp(result)
     result
