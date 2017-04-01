@@ -24,7 +24,10 @@
 #' @return Returns the logarithm of the normalisation constant for each parameter value supplied. The returned vector has am attribute \code{"details"} which contains a matrix providing additional information (smallest \eqn{x} (column \code{"from"}) and largest \eqn{x} (column \code{"to"}) for which the p.m.f. was summed up exactly as well as value of the logairhtm of that exact sum (column \code{"exact"}) and resulting lower and upper bounds (columns \code{"lower"} and \code{"upper"})).
 #' @export
 #' @useDynLib combayes logzcmpois_R
-
+#' @examples
+#' logzcmpois(lambda=10, nu=1)
+#' logzcmpois(lambda=10, nu=0.5)
+#' logzcmpois(lambda=10, nu=2)
 
 logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails=TRUE, max.iter=-1, tol.pmf=.Machine$double.eps, control=list()) {
   default.control <- list(initial.step.size=2, step.multiplier=2, tol.tails=.Machine$double.eps, tol.min=.Machine$double.eps, tol.max=.Machine$double.eps^1.25,
@@ -84,6 +87,18 @@ logzcmpois <- function(lambda, mu=lambda^(1/nu), nu, previous.result=NULL, tails
 #'@param ... Additional arguments passed on to \code{\link{logzcmpois}}
 #' @return Vector of the p.m.f. as specified in the arguments.
 #' @export
+#' @examples
+#' # Compre densities of COM-Poisson distribution with different nu
+#' x <- 0:25
+#' dcmpois(x, lambda=10, nu=1)
+#' dcmpois(x, lambda=10, nu=0.5)
+#' dcmpois(x, lambda=10, nu=2)
+#' matplot(x, cbind(dcmpois(x, mu=10, nu=1),
+#'                  dcmpois(x, mu=10, nu=0.5),
+#'                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.")
+#' legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
+#'                                        expression(nu*"="*0.5),
+#'                                        expression(nu*"="*2)))
 
 dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FALSE, ...) {
     if (length(mu)!=length(nu))
@@ -91,7 +106,7 @@ dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FAL
     if (unnormalised) {
         logZ <- 0
     } else {
-        if (length(lambda)==1) {
+        if (length(mu)==1) {
             norm <- logzcmpois(mu=mu, nu=nu, ...)
         } else {
             if (length(mu)!=length(x))
@@ -100,7 +115,7 @@ dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FAL
         }
         attributes(norm) <- NULL
     }
-    result <- nu*(ifelse(x==0, 0, lambda*log(x) - lgamma(x+1))) - norm
+    result <- nu*(ifelse(x==0, 0, x*log(mu) - lgamma(x+1))) - norm
     if (!log)
         result <- exp(result)
     result
