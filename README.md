@@ -11,7 +11,9 @@ Fertility example
 # Load data from library Countr
 library(Countr)
 data(fertility)
-result <- cmpoisreg(y=fertility$Y, X=fertility[,c(-9,-11)], num_samples=1e4, burnin=1e3)
+# Standardise all non-binary covariates
+fertility[,c(2,9,10)] <- scale(fertility[,c(2,9,10)],center=TRUE,scale=TRUE)
+result <- cmpoisreg(y=fertility$Y, X=fertility[,-11], num_samples=1e4, burnin=1e3)
 colMeans(result$posterior_beta)
 colMeans(result$posterior_delta)
 ```
