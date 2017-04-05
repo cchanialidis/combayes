@@ -104,7 +104,7 @@ dcmpois <- function(x, lambda, mu=lambda^(1/nu), nu, unnormalised=FALSE, log=FAL
     if (length(mu)!=length(nu))
         stop("mu and mu must be of the same length.")
     if (unnormalised) {
-        logZ <- 0
+        norm <- 0
     } else {
         if (length(mu)==1) {
             norm <- logzcmpois(mu=mu, nu=nu, ...)
