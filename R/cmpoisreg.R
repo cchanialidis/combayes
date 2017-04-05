@@ -185,7 +185,7 @@ cmpoisreg <- function(y, X, num_samples, burnin, algorithm="exchange", empirical
            mu_candidate <- exp(design_matrix%*%beta_candidate)
            nu_candidate <- nu_current
            #Estimate the log of (uniform * ratio of priors). This is what we defined as log_u within the decision algorithm
-           log_u <- log(stats::runif(1)) +mvnfast::dmvn(beta_current,mu=prior_mean_beta,sigma=prior_var_beta,log=TRUE)-+mvnfast::dmvn(beta_candidate,mu=prior_mean_beta,sigma=prior_var_beta,log=TRUE)
+           log_u <- log(stats::runif(1)) +mvnfast::dmvn(beta_current,mu=prior_mean_beta,sigma=prior_var_beta,log=TRUE)-mvnfast::dmvn(beta_candidate,mu=prior_mean_beta,sigma=prior_var_beta,log=TRUE)
            #Decision_algorithm refers either to the exchange or the bounds
            if(accept_move(y=y,mu_new=mu_candidate,nu_new=nu_candidate,mu=mu_current,nu=nu_current,log_u=log_u,...)$accept){#Bounds algorithm: we have to add iterations and iterations.multiplier
                beta_current <- beta_candidate
@@ -201,7 +201,7 @@ cmpoisreg <- function(y, X, num_samples, burnin, algorithm="exchange", empirical
            mu_candidate <- mu_current
            nu_candidate <- exp(-design_matrix%*%delta_candidate)
            #Estimate the log of (uniform * ratio of priors). This is what we defined as log_u within the decision algorithm
-           log_u <- log(stats::runif(1)) ++mvnfast::dmvn(delta_current,mu=prior_mean_delta,sigma=prior_var_delta,log=TRUE)-+mvnfast::dmvn(delta_candidate,mu=prior_mean_delta,sigma=prior_var_delta,log=TRUE)
+           log_u <- log(stats::runif(1)) +mvnfast::dmvn(delta_current,mu=prior_mean_delta,sigma=prior_var_delta,log=TRUE)-mvnfast::dmvn(delta_candidate,mu=prior_mean_delta,sigma=prior_var_delta,log=TRUE)
            #Decision_algorithm refers either to the exchange or the bounds
            if(accept_move(y=y,mu_new=mu_candidate,nu_new=nu_candidate,mu=mu_current,nu=nu_current,log_u=log_u,...)$accept){#Bounds algorithm: we have to add iterations and iterations.multiplier
               delta_current <- delta_candidate
