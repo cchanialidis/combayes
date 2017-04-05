@@ -3,5 +3,6 @@
 export(dcmpois)
 export(logzcmpois)
 export(rcmpois)
+export(cmpoisreg)
 useDynLib(combayes,logzcmpois_R)
 useDynLib(combayes,rcmpois_wrapper)
