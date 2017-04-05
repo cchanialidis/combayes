@@ -45,14 +45,14 @@ cmpoisreg <- function(y, X, num_samples, burnin, algorithm="exchange", empirical
                                         #Accept/reject decision in case we decide to choose the exchange algorithm
 	accept_move_exchange <- function(y,mu_new,nu_new,mu,nu,log_u,...){
 	    ystar <- rcmpois(mu=mu_new,nu=nu_new,n=1) #Sample new data y* from proposal
-		    log_likeli_ratio <- sum(uldcmpois(y,mu_new,nu_new)-uldcmpois(y,mu,nu))+sum(-uldcmpois(ystar,mu_new,nu_new)+uldcmpois(ystar,mu,nu))
+		    log_likeli_ratio <- sum(dcmpois(y,mu=mu_new,nu=nu_new,log=TRUE,unnormalised=TRUE)-dcmpois(y,mu=mu,nu=nu,log=TRUE,unnormalised=TRUE))+sum(-dcmpois(ystar,mu=mu_new,nu=nu_new,log=TRUE,unnormalised=TRUE)+dcmpois(ystar,mu=mu,nu=nu,log=TRUE,unnormalised=TRUE))
 	    list(accept=log_likeli_ratio>log_u,details=list())
 	}
 
 	#Accept/reject decision in case we decide to choose the bounds algorithm
 	accept_move_bounds <- function(y,mu_new,nu_new,mu,nu,log_u,...){
 	    control <- list(...)
-	    log_rhs <- -log_u+sum(uldcmpois(y,mu_new,nu_new)-uldcmpois(y,mu,nu))
+	    log_rhs <- -log_u+sum(dcmpois(y,mu=mu_new,nu=nu_new,log=TRUE,unnormalised=TRUE)-dcmpois(y,mu=mu,nu=nu,log=TRUE,unnormalised=TRUE))
 	    comlog_new<- NULL
 	    comlog <- NULL
 	    iterations <- control$iterations
