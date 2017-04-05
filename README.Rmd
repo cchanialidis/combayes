@@ -29,7 +29,7 @@ phdpublish <- subset(Articles, art>0)
 phdpublish <- transform(phdpublish, art=art-1)
 # Standardise all non-binary covariates
 phdpublish <- cbind(phdpublish[,c(1,2,3)],scale(phdpublish[,-c(1,2,3)],center=TRUE,scale=TRUE))
-result <- cmpoisreg(y=phdpublish$art, X=phdpublish[,2:6], num_samples=1e4, burnin=1e3)
+result <- cmpoisreg(y=phdpublish$art, X=phdpublish[,2:6], num_samples=1e4, burnin=1e3,prior_var_beta=diag(6),prior_var_delta=diag(6))
 colMeans(result$posterior_beta)
 colMeans(result$posterior_delta)
 ```
