@@ -46,9 +46,12 @@ dcmpois(x, mu=10, nu=0.5)
 dcmpois(x, mu=10, nu=2)
 matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                  dcmpois(x, mu=10, nu=0.5),
-                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
-                                        expression(nu*"="*0.5),
-                                        expression(nu*"="*2)))
+                 dcmpois(x, mu=10, nu=2)), 
+                 type="o", col=2:4, pch=16, ylab="p.m.f.")  
+legend("topright", col=2:4, lty=1:3, 
+                 c(expression(nu*"="*1),
+                   expression(nu*"="*0.5),
+                   expression(nu*"="*2)))
 ```
 
 
