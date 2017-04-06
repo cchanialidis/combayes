@@ -9,6 +9,7 @@ Sampling from COM-Poisson distributions with different dispersion levels
 ---------------------
 
 ```r
+# Choose sample size
 n <- 100
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
@@ -16,7 +17,7 @@ comp_under <- rcmpois(mu=10,nu=2,n=n)
 comp_poisson <- rcmpois(mu=10,nu=1,n=n)
 # Sampling from an overdispersed COM-Poisson distribution
 comp_over <- rcmpois(mu=10,nu=0.5,n=n)
-#Check mean and variance for each one
+# Check mean and variance for each one
 distributions <- matrix(0,nrow = n,ncol=3)
 distributions[,1]<- comp_under
 distributions[,2]<- comp_poisson 
@@ -25,7 +26,7 @@ apply(distributions,2,mean)
 apply(distributions,2,var)
 ```
 
-Estimate the logarithm of the normalisation constant 
+Estimating the logarithm of the normalisation constant 
 ----------------
 
 ```r
@@ -38,7 +39,7 @@ Estimating the probability mass function
 -----------------------
 
 ```r
-#Compare densities of COM-Poisson distribution with different nu
+# Estimating p.m.f. of COM-Poisson distribution with different dispersion levels
  x <- 0:25
 dcmpois(x, mu=10, nu=1)
 dcmpois(x, mu=10, nu=0.5)
