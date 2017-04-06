@@ -7,6 +7,7 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 
 Sampling from COM-Poisson distributions with different dispersion levels
 ---------------------
+
 ```{r eval=FALSE}
 n <- 100
 # Sampling from an underdispersed COM-Poisson distribution
@@ -26,6 +27,7 @@ apply(distributions,2,var)
 
 Estimate the logarithm of the normalisation constant 
 ----------------
+
 ```{r eval=FALSE}
 logzcmpois(mu=10,nu=2)
 logzcmpois(mu=10,nu=1)
@@ -34,6 +36,7 @@ logzcmpois(mu=10,nu=0.5)
 
 Estimating the probability mass function 
 -----------------------
+
 ```{r eval=FALSE}
 #Compare densities of COM-Poisson distribution with different nu
  x <- 0:25
