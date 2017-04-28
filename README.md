@@ -68,6 +68,22 @@ fertility[,c(2,9,10)] <- scale(fertility[,c(2,9,10)],center=TRUE,scale=TRUE)
 result <- cmpoisreg(y=fertility$Y, X=fertility[,-11], num_samples=1e4, burnin=1e3)
 colMeans(result$posterior_beta)
 colMeans(result$posterior_delta)
+# Load coda package for MCMC diagnostics
+library(coda)
+mcmc_beta <- mcmc(result$posterior_beta)
+mcmc_delta <- mcmc(result$posterior_delta)
+colnames(mcmc_beta) <-  c("intercept","German","schooling","vocational education","University","Catholic","Protestant","Muslim","rural","age","age at marriage")
+colnames(mcmc_delta) <- colnames(mcmc_beta)
+#Plot traceplots of regression coefficients
+plot(mcmc_beta)
+plot(mcmc_beta)
+#Plot caterplots of regression coefficients
+caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE)
+abline(v=0,lty=2)
+title("Regression coefficients for"~ mu)
+caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
+abline(v=0,lty=2)
+title("Regression coefficients for"~ nu)
 ```
 
 Bayesian COM-Poisson regression on the PhD publications data
@@ -86,4 +102,20 @@ phdpublish <- cbind(phdpublish[,c(1,2,3)],scale(phdpublish[,-c(1,2,3)],center=TR
 result <- cmpoisreg(y=phdpublish$art, X=phdpublish[,2:6], num_samples=1e4, burnin=1e3,prior_var_beta=diag(6),prior_var_delta=diag(6))
 colMeans(result$posterior_beta)
 colMeans(result$posterior_delta)
+# Load coda package for MCMC diagnostics
+library(coda)
+mcmc_beta <- mcmc(result$posterior_beta)
+mcmc_delta <- mcmc(result$posterior_delta)
+colnames(mcmc_beta) <- c("intercept","female","married","kids","phd","mentor")
+colnames(mcmc_delta) <- colnames(mcmc_beta)
+#Plot traceplots of regression coefficients
+plot(mcmc_beta)
+plot(mcmc_beta)
+#Plot caterplots of regression coefficients
+caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE)
+abline(v=0,lty=2)
+title("Regression coefficients for"~ mu)
+caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
+abline(v=0,lty=2)
+title("Regression coefficients for"~ nu)
 ```
