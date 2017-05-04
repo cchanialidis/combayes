@@ -20,7 +20,8 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 
 Sampling from COM-Poisson distributions with different dispersion levels
 ---------------------
-```{r eval=FALSE}
+```{r eval=TRUE, echo=TRUE}
+library(combayes)
 n <- 100
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
@@ -47,15 +48,15 @@ logzcmpois(mu=10,nu=0.5)
 
 Estimating the probability mass function 
 -----------------------
-```{r eval=FALSE}
+```{r eval=TRUE, echo=TRUE}
 #Compare densities of COM-Poisson distribution with different nu
  x <- 0:25
-dcmpois(x, mu=10, nu=1)
-dcmpois(x, mu=10, nu=0.5)
-dcmpois(x, mu=10, nu=2)
+
 matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                  dcmpois(x, mu=10, nu=0.5),
-                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
+                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") 
+
+legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
                                         expression(nu*"="*0.5),
                                         expression(nu*"="*2)))
 ```

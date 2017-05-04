@@ -10,6 +10,7 @@ Sampling from COM-Poisson distributions with different dispersion levels
 ------------------------------------------------------------------------
 
 ``` r
+library(combayes)
 n <- 100
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
@@ -23,8 +24,15 @@ distributions[,1]<- comp_under
 distributions[,2]<- comp_poisson 
 distributions[,3]<- comp_over
 apply(distributions,2,mean)
+```
+
+    ## [1]  9.70 10.15 10.23
+
+``` r
 apply(distributions,2,var)
 ```
+
+    ## [1]  4.696970  8.431818 17.411212
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
@@ -41,15 +49,17 @@ Estimating the probability mass function
 ``` r
 #Compare densities of COM-Poisson distribution with different nu
  x <- 0:25
-dcmpois(x, mu=10, nu=1)
-dcmpois(x, mu=10, nu=0.5)
-dcmpois(x, mu=10, nu=2)
+
 matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                  dcmpois(x, mu=10, nu=0.5),
-                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
+                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") 
+
+legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
                                         expression(nu*"="*0.5),
                                         expression(nu*"="*2)))
 ```
+
+![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
 
