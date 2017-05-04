@@ -3,8 +3,8 @@ combayes
 
 combayes implements Bayesian inference for COM-Poisson regression models using exact samplers. It also provides functions for sampling exactly from the COM-poisson distribution (using rejection sampling) and for evaluating exact bounds for the normalisation constant of the probability mass function of the COM-Poisson distribution. More information behind the techniques used can be found in the papers:
 
--   [Retrospective sampling in MCMC with an application to COM-Poisson regression](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
--   [Efficient Bayesian inference for COM-Poisson regression models](https://link.springer.com/article/10.1007/s11222-017-9750-x)
+-   [Retrospective sampling in MCMC with an application to COM-Poisson regression (2014)](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
+-   [Efficient Bayesian inference for COM-Poisson regression models (2017)](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
 Sampling from COM-Poisson distributions with different dispersion levels
 ------------------------------------------------------------------------
@@ -50,6 +50,10 @@ matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                                         expression(nu*"="*0.5),
                                         expression(nu*"="*2)))
 ```
+
+The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
+
+We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`).
 
 Bayesian COM-Poisson regression on fertility data
 -------------------------------------------------
@@ -112,5 +116,3 @@ caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
-
-Both aforementioned examples take advantage of the exchange algorithm, an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. If one wants to use the, computationally more time consuming, technique proposed in the earlier paper he/she has to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"`.
