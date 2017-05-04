@@ -26,13 +26,13 @@ distributions[,3]<- comp_over
 apply(distributions,2,mean)
 ```
 
-    ## [1]  9.70 10.15 10.23
+    ## [1]  9.42 10.31 10.82
 
 ``` r
 apply(distributions,2,var)
 ```
 
-    ## [1]  4.696970  8.431818 17.411212
+    ## [1]  4.670303  7.892828 17.098586
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
