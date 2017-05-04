@@ -1,7 +1,10 @@
 combayes
 ========
 
-combayes implements Bayesian inference for COM-Poisson regression models using exact samplers. It also provides functions for sampling exactly from the COM-poisson distribution (using rejection sampling) and for evaluating exact bounds for the normalisation constant of the probability mass function of the COM-Poisson distribution.
+combayes implements Bayesian inference for COM-Poisson regression models using exact samplers. It also provides functions for sampling exactly from the COM-poisson distribution (using rejection sampling) and for evaluating exact bounds for the normalisation constant of the probability mass function of the COM-Poisson distribution. More information behind the techniques used can be found in the papers:
+
+* [Retrospective sampling in MCMC with an application to COM-Poisson regression](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf),
+* [Efficient Bayesian inference for COM-Poisson regression models](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
 
 
