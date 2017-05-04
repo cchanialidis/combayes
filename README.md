@@ -3,16 +3,13 @@ combayes
 
 combayes implements Bayesian inference for COM-Poisson regression models using exact samplers. It also provides functions for sampling exactly from the COM-poisson distribution (using rejection sampling) and for evaluating exact bounds for the normalisation constant of the probability mass function of the COM-Poisson distribution. More information behind the techniques used can be found in the papers:
 
-* [Retrospective sampling in MCMC with an application to COM-Poisson regression](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf),
-* [Efficient Bayesian inference for COM-Poisson regression models](https://link.springer.com/article/10.1007/s11222-017-9750-x)
-
-
+-   [Retrospective sampling in MCMC with an application to COM-Poisson regression](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
+-   [Efficient Bayesian inference for COM-Poisson regression models](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
 Sampling from COM-Poisson distributions with different dispersion levels
----------------------
+------------------------------------------------------------------------
 
-```r
-# Choose sample size
+``` r
 n <- 100
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
@@ -20,7 +17,7 @@ comp_under <- rcmpois(mu=10,nu=2,n=n)
 comp_poisson <- rcmpois(mu=10,nu=1,n=n)
 # Sampling from an overdispersed COM-Poisson distribution
 comp_over <- rcmpois(mu=10,nu=0.5,n=n)
-# Check mean and variance for each one
+#Check mean and variance for each one
 distributions <- matrix(0,nrow = n,ncol=3)
 distributions[,1]<- comp_under
 distributions[,2]<- comp_poisson 
@@ -29,40 +26,35 @@ apply(distributions,2,mean)
 apply(distributions,2,var)
 ```
 
-Estimating the logarithm of the normalisation constant 
-----------------
+Estimate the logarithm of the normalisation constant
+----------------------------------------------------
 
-```r
+``` r
 logzcmpois(mu=10,nu=2)
 logzcmpois(mu=10,nu=1)
 logzcmpois(mu=10,nu=0.5)
 ```
 
-Estimating the probability mass function 
------------------------
+Estimating the probability mass function
+----------------------------------------
 
-```r
-# Estimating p.m.f. of COM-Poisson distribution with different dispersion levels
+``` r
+#Compare densities of COM-Poisson distribution with different nu
  x <- 0:25
 dcmpois(x, mu=10, nu=1)
 dcmpois(x, mu=10, nu=0.5)
 dcmpois(x, mu=10, nu=2)
 matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                  dcmpois(x, mu=10, nu=0.5),
-                 dcmpois(x, mu=10, nu=2)), 
-                 type="o", col=2:4, pch=16, ylab="p.m.f.")  
-legend("topright", col=2:4, lty=1:3, 
-                 c(expression(nu*"="*1),
-                   expression(nu*"="*0.5),
-                   expression(nu*"="*2)))
+                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
+                                        expression(nu*"="*0.5),
+                                        expression(nu*"="*2)))
 ```
 
+Bayesian COM-Poisson regression on fertility data
+-------------------------------------------------
 
-Bayesian COM-Poisson regression on the fertility data
------------------
-
-
-```r
+``` r
 # Load data from library Countr
 library(Countr)
 data(fertility)
@@ -90,11 +82,10 @@ abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
 
-Bayesian COM-Poisson regression on the PhD publications data
-----------------
+Bayesian COM-Poisson regression on PhD publications data
+--------------------------------------------------------
 
-
-```r
+``` r
 # Load data from library Rchoice
 library(Rchoice)
 data(Articles)
@@ -108,7 +99,7 @@ colMeans(result$posterior_beta)
 colMeans(result$posterior_delta)
 mcmc_beta  <- mcmc(result$posterior_beta)
 mcmc_delta <- mcmc(result$posterior_delta)
-colnames(mcmc_beta)  <- c("intercept","female","married","kids","phd","mentor")
+colnames(mcmc_beta) <- c("intercept","female","married","kids","phd","mentor")
 colnames(mcmc_delta) <- colnames(mcmc_beta)
 #Plot traceplots of regression coefficients
 plot(mcmc_beta)
