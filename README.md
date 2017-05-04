@@ -11,35 +11,38 @@ Sampling from COM-Poisson distributions with different dispersion levels
 
 ``` r
 library(combayes)
-n <- 100
+n <- 200
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
 # Sampling from a COM-Poisson distribution where nu=1 (i.e. Poisson distribution)
 comp_poisson <- rcmpois(mu=10,nu=1,n=n)
 # Sampling from an overdispersed COM-Poisson distribution
 comp_over <- rcmpois(mu=10,nu=0.5,n=n)
-#Check mean and variance for each one
+```
+
+``` r
+#Check mean and variance for each distribution
 distributions <- matrix(0,nrow = n,ncol=3)
 distributions[,1]<- comp_under
 distributions[,2]<- comp_poisson 
 distributions[,3]<- comp_over
-apply(distributions,2,mean)
+apply(distributions,2,mean)#Similar means (close to the value of mu)
 ```
 
-    ## [1]  9.42 10.31 10.82
+    ## [1]  9.930 10.100 10.915
 
 ``` r
-apply(distributions,2,var)
+apply(distributions,2,var)#Different variances (close to the value of mu/nu)
 ```
 
-    ## [1]  4.670303  7.892828 17.098586
+    ## [1]  5.221206  9.678392 17.947513
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
 
 ``` r
 logzcmpois(mu=10,nu=2)
-logzcmpois(mu=10,nu=1)
+logzcmpois(mu=10,nu=1)#Any ideas on what we expect the answer to be for nu=1?
 logzcmpois(mu=10,nu=0.5)
 ```
 
@@ -59,7 +62,7 @@ legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
                                         expression(nu*"="*2)))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
 
