@@ -37,7 +37,7 @@ apply(distributions,2,mean)
 apply(distributions,2,var)
 ```
 
-Estimate the logarithm of the normalisation constant 
+Estimating the logarithm of the normalisation constant 
 ----------------
 ```{r eval=FALSE}
 logzcmpois(mu=10,nu=2)
@@ -123,3 +123,6 @@ caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
+
+Both aforementioned examples take advantage of the exchange algorithm, an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. If one wants to use the, computationally more time consuming, technique proposed in the earlier paper he/she has to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"`.
+
