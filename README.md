@@ -66,14 +66,14 @@ apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##      9.480      9.855     10.730
+    ##      9.785     10.025     10.520
 
 ``` r
 apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##   4.542312  10.215050  19.886533
+    ##   5.365603   9.552136  25.899095
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
