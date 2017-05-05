@@ -8,28 +8,29 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 -   [Retrospective sampling in MCMC with an application to COM-Poisson regression (2014)](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
 -   [Efficient Bayesian inference for COM-Poisson regression models (2017)](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
-Both papers focus on the Bayesian implementation of the COM-Poisson regression model. Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is.
+Both papers focus on the Bayesian implementation of the COM-Poisson regression model.
 
-COM-Poisson distribution
-------------------------
-
-The COM-Poisson distribution is a two-parameter generalisation of the Poisson distribution that allows for different levels of dispersion. The discrete random variable \(Y\) is said to be COM-Poisson(\(\mu,\nu\)) distributed if its probability mass function is \[P(Y=y|\mu, \nu)=\left(\frac{\mu^y}{y!}\right)^\nu\frac{1}{Z(\mu, \nu)} \quad y=0, 1, 2, \ldots\] with \(Z(\mu, \nu)=\displaystyle \sum_{j=0}^{\infty}\left(\frac{\mu^j}{j!}\right)^\nu\) for \(\mu >0\) and \(\nu \ge 0\).
-
-The parameter \(\nu\) governs the amount of dispersion: the Poisson distribution is recovered when \(\nu=1\), while overdispersion corresponds to \(\nu < 1\) and underdispersion to \(\nu > 1\). The normalisation constant \(Z(\mu, \nu)\) does not have a closed form (for \(\nu\neq 1\)) and has to be approximated, but can be lower and upper bounded.
-
-The mode of the COM-Poisson distribution is \(\lfloor{\mu} \rfloor\) whereas the mean and variance of the distribution can be approximated by \[\mathbb{E}[Y]\approx \mu + \frac{1}{2\nu}-\frac{1}{2}, \quad  \quad \quad  \mathbb{V}[Y]\approx \frac{\mu}{\nu}.\] Thus \(\mu\) closely approximates the mean, unless \(\mu\) or \(\nu\) (or both) are small.
-
-COM-Poisson regression
-----------------------
-
-We consider the following COM-Poisson regression model: \[
- \begin{align*}
- P(Y_i=y_i|\mu_i, \nu_i)&=\left(\frac{\mu_i^{y_i}}{y_{i}!}\right)^{\nu_i}\frac{1}{Z(\mu_i, \nu_i)},&&\\
- \log{\mu_i}&= \hspace{0.3cm} \boldsymbol{x}_i^\intercal\boldsymbol{\beta} \Rightarrow&&  \mathbb{E}[Y_i]\approx  \exp{\{\boldsymbol{x}_i^\intercal\boldsymbol{\beta}\}},\\
- \log{\nu_i}&= -\boldsymbol{x}_i^\intercal\boldsymbol{\delta} \Rightarrow&&  \mathbb{V}[Y_i]\approx   \exp{\{ \boldsymbol{x}_i^\intercal\boldsymbol{\beta}+\boldsymbol{x}_i^\intercal\boldsymbol{\delta}\}},
-  \end{align*}
-\] where \(Y\) is the dependent random variable being modelled, while \(\boldsymbol{\beta}\) and \(\boldsymbol{\delta}\) are the regression coefficients for the centering link function and the shape link function. Larger values of \(\boldsymbol{\beta}\) and \(\boldsymbol{\delta}\) can be translated to higher mean and higher variance for the response variable. As previously mentioned, the approximations on the mean and variance in are accurate when \(\mu\) and \(\nu\) are not small (e.g. extreme overdispersion).
-
+<!-- Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is. -->
+<!-- COM-Poisson distribution -->
+<!-- ------------------------ -->
+<!-- The COM-Poisson distribution is a two-parameter generalisation of the Poisson distribution that allows for different levels of dispersion. The discrete random variable $Y$ is said to be COM-Poisson($\mu,\nu$) distributed if its probability mass function is -->
+<!-- $$P(Y=y|\mu, \nu)=\left(\frac{\mu^y}{y!}\right)^\nu\frac{1}{Z(\mu, \nu)} \quad y=0, 1, 2, \ldots$$ -->
+<!-- with  $Z(\mu, \nu)=\displaystyle \sum_{j=0}^{\infty}\left(\frac{\mu^j}{j!}\right)^\nu$ for $\mu >0$ and $\nu \ge 0$. -->
+<!--  The parameter $\nu$ governs the amount of dispersion: the Poisson distribution is recovered when $\nu=1$, while overdispersion corresponds to $\nu < 1$ and underdispersion to $\nu > 1$.  The normalisation constant $Z(\mu, \nu)$ does not have a closed form (for $\nu\neq 1$) and has to be approximated, but can be lower and upper bounded. -->
+<!-- The  mode of the COM-Poisson distribution is $\lfloor{\mu} \rfloor$ whereas the mean and variance of the distribution can be approximated by -->
+<!-- $$\mathbb{E}[Y]\approx \mu + \frac{1}{2\nu}-\frac{1}{2}, \quad  \quad \quad  \mathbb{V}[Y]\approx \frac{\mu}{\nu}.$$ -->
+<!-- Thus $\mu$ closely approximates the mean, unless $\mu$ or $\nu$ (or both) are small.  -->
+<!-- COM-Poisson regression -->
+<!-- ---------------------- -->
+<!-- We consider the following COM-Poisson regression model: -->
+<!-- $$ -->
+<!--  \begin{align*} -->
+<!--  P(Y_i=y_i|\mu_i, \nu_i)&=\left(\frac{\mu_i^{y_i}}{y_{i}!}\right)^{\nu_i}\frac{1}{Z(\mu_i, \nu_i)},&&\\ -->
+<!--  \log{\mu_i}&= \hspace{0.3cm} \boldsymbol{x}_i^\intercal\boldsymbol{\beta} \Rightarrow&&  \mathbb{E}[Y_i]\approx  \exp{\{\boldsymbol{x}_i^\intercal\boldsymbol{\beta}\}},\\ -->
+<!--  \log{\nu_i}&= -\boldsymbol{x}_i^\intercal\boldsymbol{\delta} \Rightarrow&&  \mathbb{V}[Y_i]\approx   \exp{\{ \boldsymbol{x}_i^\intercal\boldsymbol{\beta}+\boldsymbol{x}_i^\intercal\boldsymbol{\delta}\}}, -->
+<!--   \end{align*} -->
+<!-- $$ -->
+<!-- where $Y$ is the dependent random variable being modelled, while $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ are the regression coefficients for the centering link function and the shape link function. Larger values of $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ can be translated to higher mean and higher variance for the response variable. As previously mentioned, the approximations on the mean and variance in are accurate when  $\mu$ and $\nu$ are not small (e.g. extreme overdispersion). -->
 Installing the package in R
 ---------------------------
 
@@ -65,14 +66,14 @@ apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##      9.785      9.535     10.470
+    ##      9.480      9.855     10.730
 
 ``` r
 apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##   6.049020   8.692236  20.350854
+    ##   4.542312  10.215050  19.886533
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
