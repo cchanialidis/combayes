@@ -1,3 +1,5 @@
+
+
 combayes
 ========
 
@@ -6,43 +8,78 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 -   [Retrospective sampling in MCMC with an application to COM-Poisson regression (2014)](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
 -   [Efficient Bayesian inference for COM-Poisson regression models (2017)](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
+Both papers focus on the Bayesian implementation of the COM-Poisson regression model. Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is.
+
+COM-Poisson distribution
+------------------------
+
+The COM-Poisson distribution is a two-parameter generalisation of the Poisson distribution that allows for different levels of dispersion. The discrete random variable \(Y\) is said to be COM-Poisson(\(\mu,\nu\)) distributed if its probability mass function is \[P(Y=y|\mu, \nu)=\left(\frac{\mu^y}{y!}\right)^\nu\frac{1}{Z(\mu, \nu)} \quad y=0, 1, 2, \ldots\] with \(Z(\mu, \nu)=\displaystyle \sum_{j=0}^{\infty}\left(\frac{\mu^j}{j!}\right)^\nu\) for \(\mu >0\) and \(\nu \ge 0\).
+
+The parameter \(\nu\) governs the amount of dispersion: the Poisson distribution is recovered when \(\nu=1\), while overdispersion corresponds to \(\nu < 1\) and underdispersion to \(\nu > 1\). The normalisation constant \(Z(\mu, \nu)\) does not have a closed form (for \(\nu\neq 1\)) and has to be approximated, but can be lower and upper bounded.
+
+The mode of the COM-Poisson distribution is \(\lfloor{\mu} \rfloor\) whereas the mean and variance of the distribution can be approximated by \[\mathbb{E}[Y]\approx \mu + \frac{1}{2\nu}-\frac{1}{2}, \quad  \quad \quad  \mathbb{V}[Y]\approx \frac{\mu}{\nu}.\] Thus \(\mu\) closely approximates the mean, unless \(\mu\) or \(\nu\) (or both) are small.
+
+COM-Poisson regression
+----------------------
+
+We consider the following COM-Poisson regression model: \[
+ \begin{align*}
+ P(Y_i=y_i|\mu_i, \nu_i)&=\left(\frac{\mu_i^{y_i}}{y_{i}!}\right)^{\nu_i}\frac{1}{Z(\mu_i, \nu_i)},&&\\
+ \log{\mu_i}&= \hspace{0.3cm} \boldsymbol{x}_i^\intercal\boldsymbol{\beta} \Rightarrow&&  \mathbb{E}[Y_i]\approx  \exp{\{\boldsymbol{x}_i^\intercal\boldsymbol{\beta}\}},\\
+ \log{\nu_i}&= -\boldsymbol{x}_i^\intercal\boldsymbol{\delta} \Rightarrow&&  \mathbb{V}[Y_i]\approx   \exp{\{ \boldsymbol{x}_i^\intercal\boldsymbol{\beta}+\boldsymbol{x}_i^\intercal\boldsymbol{\delta}\}},
+  \end{align*}
+\] where \(Y\) is the dependent random variable being modelled, while \(\boldsymbol{\beta}\) and \(\boldsymbol{\delta}\) are the regression coefficients for the centering link function and the shape link function. Larger values of \(\boldsymbol{\beta}\) and \(\boldsymbol{\delta}\) can be translated to higher mean and higher variance for the response variable. As previously mentioned, the approximations on the mean and variance in are accurate when \(\mu\) and \(\nu\) are not small (e.g. extreme overdispersion).
+
+Installing the package in R
+---------------------------
+
+``` r
+library(devtools)
+install_github("cchanialidis/combayes")
+```
+
+All you need to do now, I hope, is
+
+``` r
+library(combayes)
+```
+
 Sampling from COM-Poisson distributions with different dispersion levels
 ------------------------------------------------------------------------
 
 ``` r
-library(combayes)
-n <- 200
+# Sample size
+n <- 200 
 # Sampling from an underdispersed COM-Poisson distribution
 comp_under <- rcmpois(mu=10,nu=2,n=n)
 # Sampling from a COM-Poisson distribution where nu=1 (i.e. Poisson distribution)
-comp_poisson <- rcmpois(mu=10,nu=1,n=n)
+comp_equi <- rcmpois(mu=10,nu=1,n=n)
 # Sampling from an overdispersed COM-Poisson distribution
 comp_over <- rcmpois(mu=10,nu=0.5,n=n)
+# Save samples in a data frame
+distributions <- data.frame(comp_under,comp_equi,comp_over)
 ```
 
 ``` r
-#Check mean and variance for each distribution
-distributions <- matrix(0,nrow = n,ncol=3)
-distributions[,1]<- comp_under
-distributions[,2]<- comp_poisson 
-distributions[,3]<- comp_over
-apply(distributions,2,mean)#Similar means (close to the value of mu)
+apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
-    ## [1]  9.930 10.100 10.915
+    ## comp_under  comp_equi  comp_over 
+    ##      9.785      9.535     10.470
 
 ``` r
-apply(distributions,2,var)#Different variances (close to the value of mu/nu)
+apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
-    ## [1]  5.221206  9.678392 17.947513
+    ## comp_under  comp_equi  comp_over 
+    ##   6.049020   8.692236  20.350854
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
 
 ``` r
 logzcmpois(mu=10,nu=2)
-logzcmpois(mu=10,nu=1)#Any ideas on what we expect the answer to be for nu=1?
+logzcmpois(mu=10,nu=1)# Any ideas on what we expect the answer to be for nu=1?
 logzcmpois(mu=10,nu=0.5)
 ```
 
@@ -50,19 +87,19 @@ Estimating the probability mass function
 ----------------------------------------
 
 ``` r
-#Compare densities of COM-Poisson distribution with different nu
+# Compare densities of COM-Poisson distribution with different nu
  x <- 0:25
 
 matplot(x, cbind(dcmpois(x, mu=10, nu=1),
                  dcmpois(x, mu=10, nu=0.5),
-                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="p.m.f.") 
+                  dcmpois(x, mu=10, nu=2)), type="o", col=2:4, pch=16, ylab="Probability mass function") 
 
 legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
                                         expression(nu*"="*0.5),
                                         expression(nu*"="*2)))
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
 The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
 
@@ -118,10 +155,10 @@ mcmc_beta  <- mcmc(result$posterior_beta)
 mcmc_delta <- mcmc(result$posterior_delta)
 colnames(mcmc_beta) <- c("intercept","female","married","kids","phd","mentor")
 colnames(mcmc_delta) <- colnames(mcmc_beta)
-#Plot traceplots of regression coefficients
+# Plot traceplots of regression coefficients
 plot(mcmc_beta)
 plot(mcmc_delta)
-#Plot caterplots of regression coefficients
+# Plot caterplots of regression coefficients
 caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ mu)
