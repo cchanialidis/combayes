@@ -18,7 +18,10 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 * [Retrospective sampling in MCMC with an application to COM-Poisson regression (2014)](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
 * [Efficient Bayesian inference for COM-Poisson regression models (2017)](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
-Both papers focus on the Bayesian implementation of the COM-Poisson regression model.
+Both papers focus on the Bayesian implementation of the COM-Poisson regression model. The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling. 
+
+
+Are you still confused about the COM-Poisson distribution and the exchange algorithm? Have a look at these [slides](https://cchanial.shinyapps.io/intro_to_compoisson/).
 
 <!-- Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is. -->
 
@@ -103,12 +106,15 @@ legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
                                         expression(nu*"="*2)))
 ```
 
-The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling. 
+
+Bayesian COM-Poisson regression
+===============================
 
 We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`).
   
 
-Bayesian COM-Poisson regression on fertility data
+
+Application I: Fertility data
 -----------------
 
 ```{r eval=FALSE}
@@ -139,7 +145,7 @@ abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
 
-Bayesian COM-Poisson regression on PhD publications data 
+Application II: PhD publications data 
 ----------------
 
 ```{r eval=FALSE}

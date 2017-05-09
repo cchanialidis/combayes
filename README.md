@@ -8,7 +8,9 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 -   [Retrospective sampling in MCMC with an application to COM-Poisson regression (2014)](http://www.maths.gla.ac.uk/~cchanialidis/Slides_and_Papers/cmpstat.pdf)
 -   [Efficient Bayesian inference for COM-Poisson regression models (2017)](https://link.springer.com/article/10.1007/s11222-017-9750-x)
 
-Both papers focus on the Bayesian implementation of the COM-Poisson regression model.
+Both papers focus on the Bayesian implementation of the COM-Poisson regression model. The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
+
+Are you still confused about the COM-Poisson distribution and the exchange algorithm? Have a look at these [slides](https://cchanial.shinyapps.io/intro_to_compoisson/).
 
 <!-- Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is. -->
 <!-- COM-Poisson distribution -->
@@ -66,14 +68,14 @@ apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##      9.785     10.025     10.520
+    ##      9.825      9.965     10.835
 
 ``` r
 apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##   5.365603   9.552136  25.899095
+    ##   5.542085   8.737462  22.238970
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
@@ -102,12 +104,13 @@ legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
+Bayesian COM-Poisson regression
+===============================
 
 We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`).
 
-Bayesian COM-Poisson regression on fertility data
--------------------------------------------------
+Application I: Fertility data
+-----------------------------
 
 ``` r
 # Load data from library Countr
@@ -137,8 +140,8 @@ abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
 
-Bayesian COM-Poisson regression on PhD publications data
---------------------------------------------------------
+Application II: PhD publications data
+-------------------------------------
 
 ``` r
 # Load data from library Rchoice
