@@ -10,9 +10,6 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 
 Both papers focus on the Bayesian implementation of the COM-Poisson regression model. The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
 
-Are you still confused about the COM-Poisson distribution and the exchange algorithm? Have a look at these [slides](https://cchanial.shinyapps.io/intro_to_compoisson/).
-
-<!-- Are you are tired of reading papers and just want a short summary of the distribution and its regression model? Ok, here it is. -->
 <!-- COM-Poisson distribution -->
 <!-- ------------------------ -->
 <!-- The COM-Poisson distribution is a two-parameter generalisation of the Poisson distribution that allows for different levels of dispersion. The discrete random variable $Y$ is said to be COM-Poisson($\mu,\nu$) distributed if its probability mass function is -->
@@ -21,18 +18,9 @@ Are you still confused about the COM-Poisson distribution and the exchange algor
 <!--  The parameter $\nu$ governs the amount of dispersion: the Poisson distribution is recovered when $\nu=1$, while overdispersion corresponds to $\nu < 1$ and underdispersion to $\nu > 1$.  The normalisation constant $Z(\mu, \nu)$ does not have a closed form (for $\nu\neq 1$) and has to be approximated, but can be lower and upper bounded. -->
 <!-- The  mode of the COM-Poisson distribution is $\lfloor{\mu} \rfloor$ whereas the mean and variance of the distribution can be approximated by -->
 <!-- $$\mathbb{E}[Y]\approx \mu + \frac{1}{2\nu}-\frac{1}{2}, \quad  \quad \quad  \mathbb{V}[Y]\approx \frac{\mu}{\nu}.$$ -->
-<!-- Thus $\mu$ closely approximates the mean, unless $\mu$ or $\nu$ (or both) are small.  -->
-<!-- COM-Poisson regression -->
-<!-- ---------------------- -->
-<!-- We consider the following COM-Poisson regression model: -->
-<!-- $$ -->
-<!--  \begin{align*} -->
-<!--  P(Y_i=y_i|\mu_i, \nu_i)&=\left(\frac{\mu_i^{y_i}}{y_{i}!}\right)^{\nu_i}\frac{1}{Z(\mu_i, \nu_i)},&&\\ -->
-<!--  \log{\mu_i}&= \hspace{0.3cm} \boldsymbol{x}_i^\intercal\boldsymbol{\beta} \Rightarrow&&  \mathbb{E}[Y_i]\approx  \exp{\{\boldsymbol{x}_i^\intercal\boldsymbol{\beta}\}},\\ -->
-<!--  \log{\nu_i}&= -\boldsymbol{x}_i^\intercal\boldsymbol{\delta} \Rightarrow&&  \mathbb{V}[Y_i]\approx   \exp{\{ \boldsymbol{x}_i^\intercal\boldsymbol{\beta}+\boldsymbol{x}_i^\intercal\boldsymbol{\delta}\}}, -->
-<!--   \end{align*} -->
-<!-- $$ -->
-<!-- where $Y$ is the dependent random variable being modelled, while $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ are the regression coefficients for the centering link function and the shape link function. Larger values of $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ can be translated to higher mean and higher variance for the response variable. As previously mentioned, the approximations on the mean and variance in are accurate when  $\mu$ and $\nu$ are not small (e.g. extreme overdispersion). -->
+<!-- Thus $\mu$ closely approximates the mean, unless $\mu$ or $\nu$ (or both) are small. -->
+Are you still confused about the COM-Poisson distribution and the exchange algorithm? Have a look at these [slides](https://cchanial.shinyapps.io/intro_to_compoisson/).
+
 Installing the package in R
 ---------------------------
 
@@ -68,14 +56,14 @@ apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##      9.825      9.965     10.835
+    ##      9.970      9.945     10.515
 
 ``` r
 apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##   5.542085   8.737462  22.238970
+    ##   5.456382  10.454246  18.039975
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
@@ -104,9 +92,18 @@ legend("topright", col=2:4, lty=1:3, c(expression(nu*"="*1),
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-Bayesian COM-Poisson regression
-===============================
+COM-Poisson regression model
+============================
 
+<!-- We consider the following COM-Poisson regression model: -->
+<!-- $$ -->
+<!--  \begin{align*} -->
+<!--  P(Y_i=y_i|\mu_i, \nu_i)&=\left(\frac{\mu_i^{y_i}}{y_{i}!}\right)^{\nu_i}\frac{1}{Z(\mu_i, \nu_i)},&&\\ -->
+<!--  \log{\mu_i}&= \hspace{0.3cm} \boldsymbol{x}_i^\intercal\boldsymbol{\beta} \Rightarrow&&  \mathbb{E}[Y_i]\approx  \exp{\{\boldsymbol{x}_i^\intercal\boldsymbol{\beta}\}},\\ -->
+<!--  \log{\nu_i}&= -\boldsymbol{x}_i^\intercal\boldsymbol{\delta} \Rightarrow&&  \mathbb{V}[Y_i]\approx   \exp{\{ \boldsymbol{x}_i^\intercal\boldsymbol{\beta}+\boldsymbol{x}_i^\intercal\boldsymbol{\delta}\}}, -->
+<!--   \end{align*} -->
+<!-- $$ -->
+<!-- where $Y$ is the dependent random variable being modelled, while $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ are the regression coefficients for the centering link function and the shape link function. Larger values of $\boldsymbol{\beta}$ and $\boldsymbol{\delta}$ can be translated to higher mean and higher variance for the response variable. As previously mentioned, the approximations on the mean and variance in are accurate when  $\mu$ and $\nu$ are not small (e.g. extreme overdispersion). -->
 We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`).
 
 Application I: Fertility data
