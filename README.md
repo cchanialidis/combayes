@@ -56,14 +56,14 @@ apply(distributions,2,mean)# Similar means (close to the value of mu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##      9.970      9.945     10.515
+    ##      9.535      9.925     10.590
 
 ``` r
 apply(distributions,2,var)# Different variances (close to the value of mu/nu)
 ```
 
     ## comp_under  comp_equi  comp_over 
-    ##   5.456382  10.454246  18.039975
+    ##   5.033945   8.893844  22.223015
 
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
@@ -167,3 +167,8 @@ caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
+
+TMI
+===
+
+For a really informative paper that outlines the theory and the implementation of regression models for count data in R have a look [here](http://ftp.uni-bayreuth.de/math/statlib/R/CRAN/doc/vignettes/pscl/countreg.pdf). Finally, [Joseph M. Hilbe](https://en.wikipedia.org/wiki/Joseph_Hilbe) released the [COUNT](https://cran.r-project.org/web/packages/COUNT/index.html) package which contains lots of data sets where the response variable is discrete.

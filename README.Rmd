@@ -1,5 +1,5 @@
 ---
-title: "Bayesian COM-Poisson regression"
+title: "Bayesian COM-Poisson regression for count data"
 author: Charalampos Chanialidis
 date: "`r format(Sys.Date(),'%d %B %Y')`"
 header-includes:
@@ -176,3 +176,10 @@ caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ nu)
 ```
+
+
+TMI
+======================
+
+For a really informative paper that outlines the theory and the implementation of regression models for count data in R have a look [here](http://ftp.uni-bayreuth.de/math/statlib/R/CRAN/doc/vignettes/pscl/countreg.pdf). Finally, [Joseph M. Hilbe](https://en.wikipedia.org/wiki/Joseph_Hilbe) released the [COUNT](https://cran.r-project.org/web/packages/COUNT/index.html) package which contains lots of data sets where the response variable is discrete.
+
