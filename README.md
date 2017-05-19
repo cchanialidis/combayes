@@ -192,6 +192,6 @@ If you prefer reading papers instead, here are some starting points:
 Regression models for count data in R
 -------------------------------------
 
-I have to add a lot of info on this subsection but until then; [here](http://ftp.uni-bayreuth.de/math/statlib/R/CRAN/doc/vignettes/pscl/countreg.pdf) is a really informative paper that outlines the theory and the implementation of regression models for count data in R have a look.
+I have to add a lot of info on this subsection but until then; [here](http://ftp.uni-bayreuth.de/math/statlib/R/CRAN/doc/vignettes/pscl/countreg.pdf) is a really informative paper that outlines the theory and the implementation of regression models for count data in R.
 
 Finally, [Joseph M. Hilbe](https://en.wikipedia.org/wiki/Joseph_Hilbe) released the [COUNT](https://cran.r-project.org/web/packages/COUNT/index.html) package which contains lots of data sets where the response variable is discrete.
