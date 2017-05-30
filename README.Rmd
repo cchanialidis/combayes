@@ -113,7 +113,7 @@ COM-Poisson regression model
 
 
 
-We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`).
+We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`). Bear in mind that the MCMC algorithm will be significantly slower in that case.
   
 
 
@@ -136,10 +136,10 @@ mcmc_beta  <- mcmc(result$posterior_beta)
 mcmc_delta <- mcmc(result$posterior_delta)
 colnames(mcmc_beta) <-  c("intercept","German","schooling","vocational education","University","Catholic","Protestant","Muslim","rural","age","age at marriage")
 colnames(mcmc_delta) <- colnames(mcmc_beta)
-#Plot traceplots of regression coefficients
+# Plot traceplots of regression coefficients
 plot(mcmc_beta)
 plot(mcmc_delta)
-#Plot caterplots of regression coefficients
+# Plot caterplots of regression coefficients
 caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE)
 abline(v=0,lty=2)
 title("Regression coefficients for"~ mu)
@@ -190,14 +190,19 @@ A talk by [Galit Shmueli](http://www.galitshmueli.com/) on the COM-Poisson distr
 
 If you prefer reading papers instead, here are some starting points:
 
+* [Computing with the COM-Poisson distribution (2003)](http://www.stat.cmu.edu/tr/tr776/tr776.pdf)
 * [A useful distribution for fitting discrete data: revival of the Conway-Maxwell-Poisson distribution (2005)](https://pdfs.semanticscholar.org/87b8/5cfea2b894966a3600eb8495b840c3c1b2de.pdf)
 * [Conjugate analysis of the Conway-Maxwell-Poisson distribution (2006)](http://projecteuclid.org/download/pdf_1/euclid.ba/1340371067)
 * [Application of the Conway-Maxwell-Poisson generalized linear model for analysing motor vehicle crashes (2008)](http://www.sciencedirect.com/science/article/pii/S0001457507002163)
 * [A flexible count data regression model for risk analysis (2008)](http://onlinelibrary.wiley.com/doi/10.1111/j.1539-6924.2008.01014.x/full)
 * [A flexible regression model for count data (2010)](https://arxiv.org/abs/1011.2077)
 * [The COM-Poisson model for count data: a survey of methods and applications (2012)](http://faculty.georgetown.edu/kfs7/MY%20PUBLICATIONS/COMPoissonModelForCountDataWithDiscussion.pdf)
+* [The exponential COM-Poisson distribution (2012)](https://link.springer.com/article/10.1007/s00362-011-0370-9)
 * [Data dispersion: Now you see it... now you don't (2013)](http://www.tandfonline.com/doi/abs/10.1080/03610926.2011.621575)
 * [The zero-inflated Conway-Maxwell-Poisson distribution: Bayesian inference, regression modeling and influence diagnostic (2014)](http://www.sciencedirect.com/science/article/pii/S1572312714000148)
+* [A COM-Poisson-type generalization of the negative binomial distribution (2014)](http://www.tandfonline.com/doi/abs/10.1080/03610926.2014.917184?journalCode=lsta20)
+* [Extended Conway-Maxwell-Poisson distribution and its properties and applications (2016)](https://jsdajournal.springeropen.com/articles/10.1186/s40488-016-0044-1)
+* [Bivariate Conway-Maxwell-Poisson distribution: Formulation, properties, and inference (2016)](http://www.sciencedirect.com/science/article/pii/S0047259X16300215)
 
 Regression models for count data in R
 --------------------------------------
