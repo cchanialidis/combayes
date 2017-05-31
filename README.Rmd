@@ -201,6 +201,7 @@ If you prefer reading papers instead, here are some starting points:
 * [Data dispersion: Now you see it... now you don't (2013)](http://www.tandfonline.com/doi/abs/10.1080/03610926.2011.621575)
 * [The zero-inflated Conway-Maxwell-Poisson distribution: Bayesian inference, regression modeling and influence diagnostic (2014)](http://www.sciencedirect.com/science/article/pii/S1572312714000148)
 * [A COM-Poisson-type generalization of the negative binomial distribution (2014)](http://www.tandfonline.com/doi/abs/10.1080/03610926.2014.917184?journalCode=lsta20)
+* [Modeling bimodal discrete data using Conway-Maxwell-Poisson mixture models (2014)](http://www.tandfonline.com/doi/full/10.1080/07350015.2014.949343?src=recsys)
 * [Extended Conway-Maxwell-Poisson distribution and its properties and applications (2016)](https://jsdajournal.springeropen.com/articles/10.1186/s40488-016-0044-1)
 * [Bivariate Conway-Maxwell-Poisson distribution: Formulation, properties, and inference (2016)](http://www.sciencedirect.com/science/article/pii/S0047259X16300215)
 
