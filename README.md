@@ -10,6 +10,8 @@ combayes implements Bayesian inference for COM-Poisson regression models using e
 
 Both papers focus on the Bayesian implementation of the COM-Poisson regression model. The latter paper takes advantage of the [exchange algorithm](https://dslpitt.org/uai/papers/06/p359-murray.pdf), an MCMC method applicable to situations where the sampling model (likelihood) can only be computed up to a normalisation constant. The algorithm requires to draw from the sampling model, which in the case of the COM-Poisson distribution can be done efficiently using rejection sampling.
 
+If you want to get a really short intro to the COM-Poisson distribution enter the URL of the README.html document at <http://htmlpreview.github.io/>.
+
 <!-- COM-Poisson distribution -->
 <!-- ------------------------ -->
 <!-- The COM-Poisson distribution is a two-parameter generalisation of the Poisson distribution that allows for different levels of dispersion. The discrete random variable $Y$ is said to be COM-Poisson($\mu,\nu$) distributed if its probability mass function is -->
@@ -67,6 +69,7 @@ apply(distributions,2,var)# Different variances (close to the value of mu/nu)
     ## comp_under  comp_equi  comp_over 
     ##   4.757764   8.385905  19.647839
 
+<!-- This is a good time to ask "Why are the means and variances approximately equal to $\mu$ and $\frac{\mu}{\nu}$?"It's also a good time for my "Why didn't you look at the papers I linked earlier" comeback. -->
 Estimating the logarithm of the normalisation constant
 ------------------------------------------------------
 
