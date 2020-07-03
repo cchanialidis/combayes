@@ -119,38 +119,42 @@ COM-Poisson regression model
 
 We illustrate the method and the benefits of using a Bayesian COM-Poisson regression model, through two real-world data sets with different levels of dispersion. If one wants to use the alternative technique proposed in the earlier paper they have to specify that the argument `algorithm` in the `cmpoisreg` is equal to `"bounds"` (in its default version is equal to `"exchange"`). Bear in mind that the MCMC algorithm will be significantly slower in that case.
   
+Application I: To be updated soon
+--------------
+
+<!-- Application I: Fertility data -->
+<!-- ----------------- -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- # Load data from library Countr -->
+<!-- library(Countr) -->
+<!-- data(fertility) -->
+<!-- # Standardise all non-binary covariates -->
+<!-- fertility[,c(3,7,9)] <- scale(fertility[,c(3,7,9)],center=TRUE,scale=TRUE) -->
+<!-- result <- cmpoisreg(y=fertility$children, X=fertility[,-1]-1, num_samples=1e4, burnin=1e3) -->
+<!-- colMeans(result$posterior_beta) -->
+<!-- colMeans(result$posterior_delta) -->
+<!-- # Load packages for MCMC diagnostics -->
+<!-- library(coda) -->
+<!-- library(mcmcplots) -->
+<!-- mcmc_beta  <- mcmc(result$posterior_beta) -->
+<!-- mcmc_delta <- mcmc(result$posterior_delta) -->
+<!-- colnames(mcmc_beta) <-  c("intercept","German","schooling","vocational education","University","Catholic","Protestant","Muslim","rural","age","age at marriage") -->
+<!-- colnames(mcmc_delta) <- colnames(mcmc_beta) -->
+<!-- # Plot traceplots of regression coefficients -->
+<!-- plot(mcmc_beta) -->
+<!-- plot(mcmc_delta) -->
+<!-- # Plot caterplots of regression coefficients -->
+<!-- caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE) -->
+<!-- abline(v=0,lty=2) -->
+<!-- title("Regression coefficients for"~ mu) -->
+<!-- caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE) -->
+<!-- abline(v=0,lty=2) -->
+<!-- title("Regression coefficients for"~ nu) -->
+<!-- ``` -->
 
 
-Application I: Fertility data
------------------
 
-```{r eval=FALSE}
-# Load data from library Countr
-library(Countr)
-data(fertility)
-# Standardise all non-binary covariates
-fertility[,c(2,9,10)] <- scale(fertility[,c(2,9,10)],center=TRUE,scale=TRUE)
-result <- cmpoisreg(y=fertility$Y, X=fertility[,-11], num_samples=1e4, burnin=1e3)
-colMeans(result$posterior_beta)
-colMeans(result$posterior_delta)
-# Load packages for MCMC diagnostics
-library(coda)
-library(mcmcplots)
-mcmc_beta  <- mcmc(result$posterior_beta)
-mcmc_delta <- mcmc(result$posterior_delta)
-colnames(mcmc_beta) <-  c("intercept","German","schooling","vocational education","University","Catholic","Protestant","Muslim","rural","age","age at marriage")
-colnames(mcmc_delta) <- colnames(mcmc_beta)
-# Plot traceplots of regression coefficients
-plot(mcmc_beta)
-plot(mcmc_delta)
-# Plot caterplots of regression coefficients
-caterplot(mcmc_beta,style="plain",bty="n",collapse=FALSE)
-abline(v=0,lty=2)
-title("Regression coefficients for"~ mu)
-caterplot(mcmc_delta,style="plain",bty="n",collapse=FALSE)
-abline(v=0,lty=2)
-title("Regression coefficients for"~ nu)
-```
 
 Application II: PhD publications data 
 ----------------
